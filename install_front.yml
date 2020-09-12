@@ -13,25 +13,21 @@
           - python3-devel
           - python3-virtualenv
         state: latest
-
     - name: Install virtualenv
       pip:
         name: virtualenv
         executable: pip3
         state: present
-
     - name: Prepare project directory
       file:
         - state: directory 
         - mode: '750'
         - path: /web
         - owner: appli
-
     - name: remove existing virtualenv
       file:
         path: /web/env
         state: absent
-
     - name: Create the virtualenv
       pip:
         virtualenv: /web/env
