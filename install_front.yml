@@ -3,7 +3,7 @@
   become: yes
   become_user: root
   tasks:
-    - name: Install dnf 
+    - name: Install dnf and epel-release
       yum:
         name: "{{packages}}"
         state: present
@@ -38,5 +38,6 @@
         state: absent
     - name: Create the virtualenv
       pip:
-        virtualenv: /web/env
+        name: pip
+        virtualenv: /web/
         virtualenv_python: python3
