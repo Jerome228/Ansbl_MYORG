@@ -20,10 +20,10 @@
         state: present
     - name: Prepare project directory
       file:
-        - state: directory 
-        - mode: '750'
-        - path: /web
-        - owner: appli
+        state: directory 
+        mode: '750'
+        path: /web
+        owner: appli
     - name: remove existing virtualenv
       file:
         path: /web/env
