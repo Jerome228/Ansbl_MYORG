@@ -41,3 +41,4 @@
         name: pip
         virtualenv: /web/
         virtualenv_python: python3
+        virtualenv_command: virtualenv-3
