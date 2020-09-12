@@ -1,0 +1,8 @@
+---
+- hosts: backend 
+  become: yes
+  tasks:
+  - name: Install packages
+    yum:
+      name: 'python-pip,python-devel,gcc,postgresql-server,postgresql-devel,postgresql-contrib' 
+      state: latest

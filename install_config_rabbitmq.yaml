@@ -1,0 +1,57 @@
+---
+- host: 192.168.56.104
+  become: yes
+  tasks:
+  - name: Add erlang repo
+    copy:
+      src: files/rabbitmq_erlang.repo
+      dest: /etc/yum.repos.d/rabbitmq_erlang.repo
+      owner: root
+      group: root
+      mode: '0644'
+  
+  - name: Update 
+    yum:
+      name: '*'
+      state: latest
+      update_cache: yes
+  
+  - name: Install erlang
+    yum: 
+      name: rabbitmq-erlang
+      state: latest
+  
+  - name: Import rabbitmq signing key 
+    rpm_key:
+      state: present
+      key: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
+      
+  - name: Add rabbit-mq repo
+    copy:
+      src: files/rabbitmq.repo
+      dest: /etc/yum.repos.d/rabbitmq.repo
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: Install rabbitmq-server
+    yum: 
+      name: bintray-rabbitmq-server
+      state: latest
+  
+  - name: Enable and start rabbitmq-server service
+    service:
+      name: rabbitmq-server
+      state: started 
+      enabled: yes 
+
+  - name: Enables the rabbitmq_management plugin
+    rabbitmq_plugin:
+      names: rabbitmq_management
+      state: enabled
+
+  - name: Open rabbitmq management port 
+    firewalld:
+      port: 15672/tcp
+      permanent: yes
+      state: enabled

@@ -1,0 +1,56 @@
+- hosts: rebond
+  tasks:
+    - name: Install psycopg2 on rebond
+      pip:
+        name: psycopg2
+
+- hosts: backend
+  become: yes
+  tasks:
+    - name: Check if the database is initialized
+      stat:
+        path: /var/lib/pgsql/data/pg_hba.conf
+      register: stat_result
+    - name: Initialize the database
+      command: postgresql-setup initdb
+      become: yes
+      become_user: postgres
+      when: not stat_result.stat.exists
+    - name: Start postgresql database server and enable the service
+      service:
+        name: postgresql
+        state: started
+        enabled: yes 
+    - name: Ajust the config file (make the database reachable from the local network)
+      postgresql_pg_hba:
+        dest: /var/lib/pgsql/data/pg_hba.conf
+        contype: host
+        users: all
+        source: 192.168.56.100/24
+        databases: all
+        method: md5
+    - name: Restart the database server
+      service:
+        name: postgresql
+        state: restarted
+    - name: Create the applicative database
+      postgresql_db:
+        name: appdb
+        encoding: UTF-8
+      become: yes
+      become_user: postgres
+    - name: Create applicative user on the database and insure access to the database
+      postgresql_user:
+        db: appdb
+        name: appuser
+        password: rootroot
+        priv: ALL
+        state: present
+      become: yes
+      become_user: postgres
+    - name: Ensure user does not have unnecessary privileges
+      become_user: postgres
+      postgresql_user: 
+        name: appuser
+        role_attr_flags: NOSUPERUSER,NOCREATEDB
+        state: present
