@@ -1,0 +1,41 @@
+---
+- hosts: 192.168.56.105
+  become: yes
+  become_user: root
+  tasks:
+    - name: Install python3, apache and supervisor
+      dnf:
+        name: 
+          - python3
+          - httpd
+          - supervisor
+          - python3-pip
+          - python3-devel
+          - python3-virtualenv
+        state: latest
+
+    - name: Install virtualenv
+      pip:
+        name: virtualenv
+        executable: pip3
+        state: present
+
+    - name: Prepare project directory
+      file:
+        - state: directory 
+        - mode: '750'
+        - path: /web
+        - owner: appli
+
+    - name: remove existing virtualenv
+      file:
+        path: /web/env
+        state: absent
+
+    - name: Create the virtualenv
+      pip:
+        name: "{{ virtualenv_default_package | default('pip') }}"
+        virtualenv: /web/env
+        virtualenv_python: python3
+
+      
