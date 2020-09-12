@@ -3,6 +3,7 @@
     - name: Install psycopg2 on rebond
       pip:
         name: psycopg2
+        executable: pip3
 
 - hosts: backend
   become: yes
