@@ -1,12 +1,15 @@
-- hosts: rebond
+- hosts: 192.468.56.102
+  become: yes
+  become_user: root
   tasks:
     - name: Install psycopg2 on rebond
       pip:
         name: psycopg2
         executable: pip3
 
-- hosts: backend
+- hosts: 192.468.56.102
   become: yes
+  become_user: root
   tasks:
     - name: Check if the database is initialized
       stat:
