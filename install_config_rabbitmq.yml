@@ -69,6 +69,7 @@
           3534656264346463630a336138616665303635346336653161323931643565386431346566313161
           3664
       vhost: /
+      tags: administrator
       configure_priv: .*
       read_priv: .*
       write_priv: .*
