@@ -34,6 +34,5 @@
 
     - name: Create the virtualenv
       pip:
-        name: "{{ virtualenv_default_package | default('pip') }}"
         virtualenv: /web/env
         virtualenv_python: python3
