@@ -42,3 +42,14 @@
         virtualenv: /web/env
         virtualenv_python: python3
         virtualenv_command: virtualenv-3
+    - name: Start and enable httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+    - name: Open http port 
+      firewalld:
+        port: 80/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes
