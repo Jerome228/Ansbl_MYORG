@@ -39,6 +39,6 @@
     - name: Create the virtualenv
       pip:
         name: pip
-        virtualenv: /web/
+        virtualenv: /web/env
         virtualenv_python: python3
         virtualenv_command: virtualenv-3
