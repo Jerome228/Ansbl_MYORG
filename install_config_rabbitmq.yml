@@ -19,8 +19,8 @@
   
   - name: Install erlang
     yum: 
-      name: rabbitmq-erlang
-      state: latest
+      name: erlang
+      state: present
   
   - name: Import rabbitmq signing key 
     rpm_key:
@@ -38,7 +38,7 @@
   - name: Install rabbitmq-server
     yum: 
       name: rabbitmq-server
-      state: latest
+      state: present
   
   - name: Enable and start rabbitmq-server service
     service:
