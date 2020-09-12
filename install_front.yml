@@ -15,12 +15,11 @@
       dnf:
         name: 
           - python3
-          - apache2
+          - httpd
           - supervisor
           - python3-pip
           - python3-devel
           - python3-virtualenv
-          - libapache2-mod-wsgi
         state: latest
     - name: Install virtualenv
       pip:
