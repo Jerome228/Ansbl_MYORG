@@ -6,7 +6,7 @@
   - name: Add erlang repo
     copy:
       src: files/rabbitmq_erlang.repo
-      dest: /etc/yum.repos.d/rabbitmq_erlang.repo
+      dest: /etc/yum.repos.d/rabbitmq-erlang.repo
       owner: root
       group: root
       mode: '0644'
@@ -30,14 +30,14 @@
   - name: Add rabbit-mq repo
     copy:
       src: files/rabbitmq.repo
-      dest: /etc/yum.repos.d/rabbitmq.repo
+      dest: /etc/yum.repos.d/rabbitmq-server.repo
       owner: root
       group: root
       mode: '0644'
 
   - name: Install rabbitmq-server
     yum: 
-      name: bintray-rabbitmq-server
+      name: rabbitmq-server
       state: latest
   
   - name: Enable and start rabbitmq-server service
