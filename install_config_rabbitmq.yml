@@ -56,3 +56,4 @@
       port: 15672/tcp
       permanent: yes
       state: enabled
+      immediate: yes 
