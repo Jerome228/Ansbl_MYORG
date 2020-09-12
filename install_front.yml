@@ -50,12 +50,14 @@
         immediate: yes
     - name: Copy index test page 
       file:
-        src: files/index.html
+        src: files/index.html.j2
         dest: /var/www/html/index.html
+        state: file
     - name: Setup apache virtualhost
       file:
-        src: files/apache.conf
-        dest: /etc/apache2/sites-available/myorg.conf   
+        src: files/apache.conf.j2
+        dest: /etc/apache2/sites-available/myorg.conf  
+        state: file  
     - name: Start and enable httpd
       service:
         name: httpd
